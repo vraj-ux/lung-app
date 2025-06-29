@@ -10,7 +10,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 # Load the trained logistic regression model
-model = pickle.load(open('C:/Users/Vraj/OneDrive/Desktop/internship/lung app/lung_model (1).sav', 'rb'))
+model = pickle.load(open('lung_model (1).sav', 'rb'))
 
 # Set Streamlit page configuration
 st.set_page_config(page_title="Lung Cancer Survival Predictor")
