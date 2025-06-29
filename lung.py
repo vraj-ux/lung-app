@@ -1,6 +1,6 @@
 import pickle
 import streamlit as st
-from streamlit_option_menu import option_menu
+import streamlit_option_menu as option_menu
 
 # Load model (must place lung_model.sav in same folder)
 model = pickle.load(open('lung_model.sav', 'rb'))
