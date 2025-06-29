@@ -1,17 +1,13 @@
-# lung.py
-
 import pickle
 import streamlit as st
 from streamlit_option_menu import option_menu
 
-# Load the trained model (update the path if needed)
-model = pickle.load(open('lung_model (1).sav', 'rb'))
+# Load model (must place lung_model.sav in same folder)
+model = pickle.load(open('lung_model.sav', 'rb'))
 
-# Streamlit UI
 st.set_page_config(page_title="Lung Cancer Survival Predictor")
 st.title("🫁 Lung Cancer Survival Predictor")
 
-# Navigation menu
 selected = option_menu(
     menu_title="Main Menu",
     options=["Home", "Survival Prediction"],
