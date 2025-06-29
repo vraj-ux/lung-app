@@ -1,22 +1,17 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Jun 29 21:23:10 2025
-
-@author: Vraj
-"""
+# lung.py
 
 import pickle
 import streamlit as st
 from streamlit_option_menu import option_menu
 
-# Load the trained logistic regression model
+# Load the trained model (update the path if needed)
 model = pickle.load(open('lung_model (1).sav', 'rb'))
 
-# Set Streamlit page configuration
+# Streamlit UI
 st.set_page_config(page_title="Lung Cancer Survival Predictor")
 st.title("🫁 Lung Cancer Survival Predictor")
 
-# Create navigation menu
+# Navigation menu
 selected = option_menu(
     menu_title="Main Menu",
     options=["Home", "Survival Prediction"],
@@ -25,17 +20,15 @@ selected = option_menu(
     orientation="horizontal"
 )
 
-# If 'Survival Prediction' is selected
 if selected == "Survival Prediction":
     st.subheader("Enter Patient Information:")
 
     col1, col2, col3 = st.columns(3)
 
-    # Input fields
     with col1:
-        age = st.number_input("Age (years)", min_value=1, max_value=120, value=60)
-        bmi = st.number_input("BMI", min_value=10.0, max_value=60.0, value=22.0)
-        cholesterol = st.number_input("Cholesterol Level (mg/dL)", min_value=100, max_value=400, value=180)
+        age = st.number_input("Age", 1, 120, 60)
+        bmi = st.number_input("BMI", 10.0, 60.0, 22.0)
+        cholesterol = st.number_input("Cholesterol", 100, 400, 180)
 
     with col2:
         gender = st.selectbox("Gender", ["Male", "Female"])
@@ -43,17 +36,15 @@ if selected == "Survival Prediction":
         cancer_stage = st.selectbox("Cancer Stage", ["I", "II", "III", "IV"])
 
     with col3:
-        treatment_type = st.selectbox("Treatment Type", ["Surgery", "Chemotherapy", "Combined"])
-        family_history = st.radio("Family History of Cancer?", ["No", "Yes"])
+        treatment_type = st.selectbox("Treatment", ["Surgery", "Chemotherapy", "Combined"])
+        family_history = st.radio("Family History?", ["No", "Yes"])
         smoking_status = st.selectbox("Smoking Status", ["Never", "Passive Smoker", "Former Smoker", "Current Smoker"])
         hypertension = st.radio("Hypertension?", ["No", "Yes"])
         asthma = st.radio("Asthma?", ["No", "Yes"])
         cirrhosis = st.radio("Cirrhosis?", ["No", "Yes"])
         other_cancer = st.radio("Other Cancer?", ["No", "Yes"])
 
-    # Prediction button
     if st.button("Predict Survival"):
-        # Encode all inputs to match training
         input_data = [
             age,
             bmi,
@@ -70,10 +61,7 @@ if selected == "Survival Prediction":
             {"Surgery": 0, "Chemotherapy": 1, "Combined": 2}[treatment_type]
         ]
 
-        # Make prediction
         prediction = model.predict([input_data])[0]
-
-        # Display result
         if prediction == 1:
             st.success("✅ Predicted Outcome: Survived")
         else:
